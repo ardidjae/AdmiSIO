@@ -8,6 +8,7 @@ import RegistrationScreen from './navigation/screens/RegistrationScreen';
 import LegalNoticeScreen from './navigation/screens/LegalNoticeScreen';
 import SearchScreen from './navigation/screens/SearchScreen';
 import RegistrationScreenPorteOuverte from './navigation/screens/RegistrationScreenPorteOuverte';
+import ProfilScreen from './navigation/screens/ProfilScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name="Réglement" component={LegalNoticeScreen} />
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen name="Porte Ouverte" component={RegistrationScreenPorteOuverte} />
+        <Stack.Screen name="Profil" component={ProfilScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -44,6 +46,9 @@ function HomeScreen({ navigation }) {
       {/* Autres bouton recherche eleves */}
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Search')}>
         <Text style={styles.buttonText}>Recherche Etudiant</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profil')}>
+        <Text style={styles.buttonText}>Profil</Text>
       </TouchableOpacity>
     </View>
   );
