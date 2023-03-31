@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import { Picker } from '@react-native-picker/picker';
 // import firestore from '../../config/firebase';
 
 // Utilisez Firebase dans votre code ici
@@ -13,6 +14,8 @@ export default function RegistrationScreen({ navigation }) {
   const [bac, setBac] = useState('');
   const [etablissement, setEtablissement] = useState('');
   const [choixOption, setChoixOption] = useState('');
+  const [type, setType] = useState('Salon Etudiant');
+  const [annee, setAnnee] = useState(new Date().getFullYear().toString()); // Champ année invisible
 
   const handleRegistration = async () => {
     try {
@@ -25,6 +28,8 @@ export default function RegistrationScreen({ navigation }) {
           bac,
           etablissement,
           choixOption,
+          type,
+          annee,
         });
       console.log('Utilisateur enregistré avec succès!', response);
     } catch (error) {
@@ -34,7 +39,7 @@ export default function RegistrationScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Salon Etudiant</Text>
+      <Text style={styles.title}>Inscription</Text>
       <View style={styles.form}>
         <TextInput
           style={styles.input}
@@ -70,12 +75,24 @@ export default function RegistrationScreen({ navigation }) {
           onChangeText={setEtablissement}
           placeholder="Établissement"
         />
-        <TextInput
+        <Picker
+          selectedValue={choixOption}
+          onValueChange={(itemValue) => setChoixOption(itemValue)}
           style={styles.input}
-          value={choixOption}
-          onChangeText={setChoixOption}
-          placeholder="Choix option"
-        />
+        >
+          <Picker.Item label="SLAM" value="SLAM" />
+          <Picker.Item label="SISR" value="SISR" />
+          <Picker.Item label="NSP" value="NSP" />
+        </Picker>
+        <Picker
+          selectedValue={type}
+          onValueChange={(itemValue) => setType(itemValue)}
+          style={styles.input}
+        >
+          <Picker.Item label="Salon Etudiant" value="Salon Etudiant" />
+          <Picker.Item label="Porte Ouverte" value="Porte Ouverte" />
+        </Picker>
+
         <TouchableOpacity style={styles.button} onPress={handleRegistration}>
           <Text style={styles.buttonText}>S'inscrire</Text>
         </TouchableOpacity>

@@ -6,6 +6,8 @@ export default function LegalNoticeSreen(navigation) {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.heading}>Politique de confidentialité et de protection des données personnelles</Text>
       <Text style={styles.text}>Date de création : 2023</Text>
+      <Text style={styles.text}>Adresse : 98 rte Ifs, 14000 Caen</Text>
+      <Text style={styles.text}>Adresse e-mail : contact@adminsio.fr</Text>
       <Text style={styles.text}>Auteurs : Ardelaide DJAE et Arnaud LE COZANNET</Text>
       <Text style={styles.text}>L'application mobile admiSIO collecte des données personnelles des visiteurs lors des portes ouvertes ou pendant le salon de l'étudiant. Ces données sont stockées dans une base de données externalisée via Firebase et sont utilisées uniquement dans le cadre de la sélection des dossiers des futurs étudiants de la section BTS SIO du Lycée Jean Rostand.</Text>
       <Text style={styles.text}>Les visiteurs doivent donner leur consentement explicite et librement donné pour que leurs données personnelles soient collectées, utilisées et stockées. Les visiteurs ont le droit de demander l'accès à leurs données personnelles, de les corriger si elles sont inexactes et de les supprimer si elles ne sont plus nécessaires.</Text>

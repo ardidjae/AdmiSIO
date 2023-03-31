@@ -1,59 +1,60 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import firebase from '../../config/firebase';
+import { useNavigation } from '@react-navigation/native';
+import { Picker } from '@react-native-picker/picker';
 
 export default function SearchScreen() {
-const [nom, setNom] = useState('');
-const [etablissement, setEtablissement] = useState('');
-const [choixOption, setChoixOption] = useState('');
+  const [type, setType] = useState(''); // Nouveau state pour le type
+  const [annee, setAnnee] = useState(''); // Nouveau state pour l'année de l'inscription
 
-const handleSearch = () => {
-// Recherche d'étudiants dans la base de données Firebase
-firebase.firestore()
-.collection('Inscription')
-.where('nom', '==', nom)
-.where('etablissement', '==', etablissement)
-.where('choixOption', '==', choixOption)
-.get()
-.then(querySnapshot => {
-// Traitement des résultats de recherche
-const results = [];
-querySnapshot.forEach(doc => {
-results.push(doc.data());
-});
-console.log('Search results:', results);
-})
-.catch(error => console.error(error));
-};
+  const navigation = useNavigation();
 
-return (
-<View style={styles.container}>
-<Text style={styles.title}>Recherche d'étudiants</Text>
-<View style={styles.form}>
-<TextInput
-       style={styles.input}
-       placeholder="Nom de l'étudiant"
-       value={nom}
-       onChangeText={setNom}
-     />
-<TextInput
-       style={styles.input}
-       placeholder="Nom de l'établissement"
-       value={etablissement}
-       onChangeText={setEtablissement}
-     />
-<TextInput
-       style={styles.input}
-       placeholder="choixOption (SLAM, SISR, NSP)"
-       value={choixOption}
-       onChangeText={setChoixOption}
-     />
-<TouchableOpacity style={styles.button} onPress={handleSearch}>
-<Text style={styles.buttonText}>Rechercher</Text>
-</TouchableOpacity>
-</View>
-</View>
-);
+  const handleSearch = () => {
+    // Recherche d'étudiants dans la base de données Firebase
+    firebase.firestore()
+      .collection('Inscription')
+      // .where('type', '==', type) // Ajout de la condition pour le type de l'événement
+      // .where('annee', '==', annee) // Ajout de la condition pour l'année de l'inscription
+      .get()
+      .then(querySnapshot => {
+        // Traitement des résultats de recherche
+        const results = [];
+        querySnapshot.forEach(doc => {
+          results.push(doc.data());
+        });
+        console.log('Search results:', results);
+        navigation.navigate('SearchResults', { results });
+      })
+      .catch(error => console.error(error));
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Recherche d'étudiants</Text>
+      <View style={styles.form}>
+        <Picker
+          style={styles.input}
+          selectedValue={type}
+          onValueChange={(itemValue, itemIndex) => setType(itemValue)}
+        >
+          <Picker.Item label="Salon Etudiant" value="Salon Etudiant" />
+          <Picker.Item label="Porte Ouverte" value="Porte ouverte" />
+        </Picker>
+        <Picker
+          style={styles.input}
+          selectedValue={annee}
+          onValueChange={(itemValue, itemIndex) => setAnnee(itemValue)}
+        >
+          <Picker.Item label="2022" value="2022" />
+          <Picker.Item label="2023" value="2023" />
+        </Picker>
+        <TouchableOpacity style={styles.button} onPress={handleSearch}>
+          <Text style={styles.buttonText}>Rechercher</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -21,3 +21,8 @@ const auth = firebase.auth();
 export { auth };
 
 export default firebase;
+
+// Utiliser en cas de auth non reconnue(firebase)
+// import auth from '@react-native-firebase/auth';
+// const firebaseAuth = auth();
+// export { firebaseAuth };

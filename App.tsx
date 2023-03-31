@@ -7,8 +7,9 @@ import LoginScreen from './navigation/screens/LoginScreen';
 import RegistrationScreen from './navigation/screens/RegistrationScreen';
 import LegalNoticeScreen from './navigation/screens/LegalNoticeScreen';
 import SearchScreen from './navigation/screens/SearchScreen';
-import RegistrationScreenPorteOuverte from './navigation/screens/RegistrationScreenPorteOuverte';
+// import RegistrationScreenPorteOuverte from './navigation/screens/RegistrationScreenPorteOuverte';
 import ProfilScreen from './navigation/screens/ProfilScreen';
+import SearchResultsScreen from './navigation/screens/SearchResultsScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,11 +19,12 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Salon Etudiant" component={RegistrationScreen} />
+        <Stack.Screen name="Inscription" component={RegistrationScreen} />
         <Stack.Screen name="Réglement" component={LegalNoticeScreen} />
         <Stack.Screen name="Search" component={SearchScreen} />
-        <Stack.Screen name="Porte Ouverte" component={RegistrationScreenPorteOuverte} />
+        {/* <Stack.Screen name="Porte Ouverte" component={RegistrationScreenPorteOuverte} /> */}
         <Stack.Screen name="Profil" component={ProfilScreen} />
+        <Stack.Screen name="SearchResults" component={SearchResultsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -34,12 +36,12 @@ function HomeScreen({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
         <Text style={styles.buttonText}>Connexion</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Salon Etudiant')}>
-        <Text style={styles.buttonText}>Inscription au Salon Etudiant</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Inscription')}>
+        <Text style={styles.buttonText}>Inscription</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Porte Ouverte')}>
+      {/* <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Porte Ouverte')}>
         <Text style={styles.buttonText}>Inscription au Porte Ouvertes</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Réglement')}>
         <Text style={styles.buttonText}>Réglement géneral</Text>
       </TouchableOpacity>
