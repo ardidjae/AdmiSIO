@@ -14,8 +14,8 @@ export default function SearchScreen() {
     // Recherche d'étudiants dans la base de données Firebase
     firebase.firestore()
       .collection('Inscription')
-      // .where('type', '==', type) // Ajout de la condition pour le type de l'événement
-      // .where('annee', '==', annee) // Ajout de la condition pour l'année de l'inscription
+      .where('type', '==', type) // Ajout de la condition pour le type de l'événement
+      .where('annee', '==', annee) // Ajout de la condition pour l'année de l'inscription
       .get()
       .then(querySnapshot => {
         // Traitement des résultats de recherche
@@ -24,7 +24,8 @@ export default function SearchScreen() {
           results.push(doc.data());
         });
         console.log('Search results:', results);
-        navigation.navigate('SearchResults', { results });
+        const filteredResults = results.filter(result => result.type === type && result.annee === annee); // Filtrer les résultats en fonction du type d'événement sélectionné
+        navigation.navigate('SearchResults', { results : filteredResults});
       })
       .catch(error => console.error(error));
   };
@@ -39,7 +40,7 @@ export default function SearchScreen() {
           onValueChange={(itemValue, itemIndex) => setType(itemValue)}
         >
           <Picker.Item label="Salon Etudiant" value="Salon Etudiant" />
-          <Picker.Item label="Porte Ouverte" value="Porte ouverte" />
+          <Picker.Item label="Porte Ouverte" value="Porte Ouverte" />
         </Picker>
         <Picker
           style={styles.input}
