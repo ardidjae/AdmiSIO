@@ -4,16 +4,27 @@ import { auth } from '../../config/firebase';
 
 export default function ProfileScreen({ navigation }) {
   const [email, setEmail] = useState('');
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [signupDate, setSignupDate] = useState(null);
 
   useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
-      setEmail(user.email);
-    }
+    const unsubscribe = auth().onAuthStateChanged(user => {
+      if (user) {
+        setEmail(user.email);
+        setIsSignedIn(true);
+        setSignupDate(user.metadata.creationTime);
+      } else {
+        setIsSignedIn(false);
+        setSignupDate(null);
+      }
+    });
+
+    return unsubscribe;
   }, []);
 
   const handleLogout = () => {
-    auth.signOut()
+    auth()
+      .signOut()
       .then(() => {
         navigation.replace("Home");
       })
@@ -23,16 +34,33 @@ export default function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profil</Text>
-      <View style={styles.info}>
-        <Text style={styles.label}>Email:</Text>
-        <Text style={styles.value}>{email}</Text>
-      </View>
-      <TouchableOpacity style={styles.button} onPress={handleLogout}>
+      {isSignedIn ? (
+        <View style={styles.info}>
+          <View style={styles.emailContainer}>
+            <Text style={[styles.value, {textAlign: 'center'}]}>{email}</Text>
+            {signupDate && (
+              <Text style={styles.signupDate}>
+                Membre depuis : {new Date(signupDate).toLocaleDateString('fr-FR', {day: 'numeric', month: 'numeric', year: 'numeric'})}
+              </Text>
+            )}
+          </View>
+        </View>
+      ) : (
+        <View style={styles.info}>
+          <Text style={styles.value}>Aucun utilisateur connecté</Text>
+        </View>
+      )}
+      <TouchableOpacity
+        style={[styles.button, !isSignedIn && styles.disabledButton]}
+        onPress={handleLogout}
+        disabled={!isSignedIn}
+      >
         <Text style={styles.buttonText}>Se déconnecter</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -45,6 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
+    color:'#000',
   },
   info: {
     marginBottom: 24,
@@ -68,5 +97,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  disabledButton: {
+    opacity: 0.5,
   },
 });

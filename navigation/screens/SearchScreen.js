@@ -69,6 +69,7 @@ title: {
 fontSize: 24,
 fontWeight: 'bold',
 marginBottom: 24,
+color:'#000',
 },
 form: {
 width: '80%',

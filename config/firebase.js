@@ -1,6 +1,6 @@
 import { firebase } from '@react-native-firebase/firestore';
-import 'firebase/firestore';
-import 'firebase/auth';
+// import 'firebase/auth';
+import auth from '@react-native-firebase/auth';
 
 const firebaseConfig = {
   // votre configuration Firebase ici
@@ -17,7 +17,7 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const auth = firebase.auth();
+// const auth = firebase.auth();
 export { auth };
 
 export default firebase;

@@ -37,10 +37,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginVertical: 10,
+    color:'#000',
+    margin:5,
   },
   description: {
     fontSize: 16,
     marginBottom: 20,
     textAlign: 'justify',
+    color:'#000',
+    margin:5,
   },
 });

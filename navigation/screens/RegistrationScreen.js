@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { Picker } from '@react-native-picker/picker';
 // import firestore from '../../config/firebase';
@@ -38,20 +38,23 @@ export default function RegistrationScreen({ navigation }) {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
-      <Text style={styles.title}>Inscription</Text>
+      <Text style={styles.title}>Formulaire d'inscription</Text>
       <View style={styles.form}>
         <TextInput
           style={styles.input}
           value={nom}
           onChangeText={setNom}
           placeholder="Nom"
+          placeholderTextColor="#000"
         />
         <TextInput
           style={styles.input}
           value={prenom}
           onChangeText={setPrenom}
           placeholder="Prénom"
+          placeholderTextColor="#000"
         />
         <TextInput
           style={styles.input}
@@ -62,19 +65,23 @@ export default function RegistrationScreen({ navigation }) {
           autoCapitalize="none"
           autoCompleteType="email"
           textContentType="emailAddress"
+          placeholderTextColor="#000"
         />
         <TextInput
           style={styles.input}
           value={bac}
           onChangeText={setBac}
           placeholder="Bac"
+          placeholderTextColor="#000"
         />
         <TextInput
           style={styles.input}
           value={etablissement}
           onChangeText={setEtablissement}
           placeholder="Établissement"
+          placeholderTextColor="#000"
         />
+        <Text style={styles.description}>Quelle option préférez-vous ?</Text>
         <Picker
           selectedValue={choixOption}
           onValueChange={(itemValue) => setChoixOption(itemValue)}
@@ -84,6 +91,7 @@ export default function RegistrationScreen({ navigation }) {
           <Picker.Item label="SISR" value="SISR" />
           <Picker.Item label="NSP" value="NSP" />
         </Picker>
+        <Text style={styles.description}>Où souhaitez-vous nous rencontrer ?</Text>
         <Picker
           selectedValue={type}
           onValueChange={(itemValue) => setType(itemValue)}
@@ -98,6 +106,7 @@ export default function RegistrationScreen({ navigation }) {
         </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
   );
 }
 
@@ -107,14 +116,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5F5F5',
+    margin:5,
+    padding:5,
   },
   checkbox: {
     alignSelf: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 24,
+    marginBottom: 30,
+    marginTop:15,
+    color:'#000',
   },
   form: {
     width: '80%',
@@ -133,6 +146,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     alignItems: 'center',
+    marginTop:10,
+    marginBottom:50,
   },
   buttonText: {
     color: '#FFFFFF',

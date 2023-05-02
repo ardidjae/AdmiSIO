@@ -51,6 +51,7 @@ export default function LoginScreen({ navigation }) {
           autoCapitalize="none"
           autoCompleteType="email"
           textContentType="emailAddress"
+          placeholderTextColor="#000"
         />
         <TextInput
           style={styles.input}
@@ -61,6 +62,7 @@ export default function LoginScreen({ navigation }) {
           autoCapitalize="none"
           autoCompleteType="password"
           textContentType="password"
+          placeholderTextColor="#000"
         />
         <TouchableOpacity style={styles.button} onPress={handleLogin} >
           <Text style={styles.buttonText}>Se connecter</Text>
@@ -84,6 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
+    color:'#000',
   },
   form: {
     width: '80%',
