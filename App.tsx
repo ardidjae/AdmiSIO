@@ -29,10 +29,10 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Inscription" component={RegistrationScreen} />
+        <Stack.Screen name="Se connecter" component={LoginScreen} />
+        <Stack.Screen name="S'inscrire" component={RegistrationScreen} />
         <Stack.Screen name="Réglement" component={LegalNoticeScreen} />
-        <Stack.Screen name="Search" component={SearchScreen} />
+        <Stack.Screen name="Recherche" component={SearchScreen} />
         {/* <Stack.Screen name="Porte Ouverte" component={RegistrationScreenPorteOuverte} /> */}
         <Stack.Screen name="Profil" component={ProfilScreen} />
         <Stack.Screen name="SearchResults" component={SearchResultsScreen} />
@@ -54,26 +54,26 @@ function HomeScreen({ navigation }) {
       <Text style={styles.subtitle}>Bienvenue dans l'application dédiée aux futurs étudiants du BTS SIO</Text>
       <Text style={styles.titleOption}>Découvrir</Text>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
-          <TouchableOpacity key={albums[0].id} style={{ width: '48%', marginBottom: 15, borderWidth: 1,
-            borderColor: '#DDD', borderRadius: 10, backgroundColor: '#FFF',
+          <TouchableOpacity key={albums[0].id} style={{ width: '48%', marginRight: '2%', marginBottom: 15, borderWidth: 1,
+            borderColor: '#DDD', borderRadius: 10, backgroundColor: '#DCDCD6',
             shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.2, shadowRadius: 4 }} onPress={() => navigation.navigate('SLAM')}>
             <Image source={albums[0].image} style={{ width: '100%', height: 100,
               borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
             <View style={{ padding: 10 }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{albums[0].title}</Text>
-              <Text style={{ fontSize: 14, marginTop: 5 }}>{albums[0].description}</Text>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', color: "#000" }}>{albums[0].title}</Text>
+              <Text style={{ fontSize: 14, marginTop: 5, color: "#000" }}>{albums[0].description}</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity key={albums[1].id} style={{ width: '48%', marginBottom: 15, borderWidth: 1,
-            borderColor: '#DDD', borderRadius: 10, backgroundColor: '#FFF',
+            borderColor: '#DDD', borderRadius: 10, backgroundColor: '#DCDCD6',
             shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.2, shadowRadius: 4 }} onPress={() => navigation.navigate('SISR')}>
             <Image source={albums[1].image} style={{ width: '100%', height: 100,
               borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
             <View style={{ padding: 10 }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{albums[1].title}</Text>
-              <Text style={{ fontSize: 14, marginTop: 5 }}>{albums[1].description}</Text>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', color: "#000" }}>{albums[1].title}</Text>
+              <Text style={{ fontSize: 14, marginTop: 5, color: "#000" }}>{albums[1].description}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -81,29 +81,26 @@ function HomeScreen({ navigation }) {
           <Text style={styles.titleInscription}>Inscription</Text>
           <Text style={styles.description}>Venez découvrir le BTS SIO et rencontrer nos enseignants lors de nos portes ouvertes et salons étudiants ! Inscrivez-vous dès maintenant pour participer à ces événements passionnants.</Text>
           <TouchableOpacity key={albums[2].id} style={{ marginBottom: 15, borderWidth: 1,
-            borderColor: '#DDD',borderRadius: 10, backgroundColor: '#FFF',
+            borderColor: '#DDD',borderRadius: 10, backgroundColor: '#DCDCD6',
             shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.2, shadowRadius: 4 }} onPress={() => navigation.navigate('Inscription')}>
+            shadowOpacity: 0.2, shadowRadius: 4 }} onPress={() => navigation.navigate('S\'inscrire')}>
             <Image source={albums[2].image} style={{ width: '100%', height: 110,
               borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
             <View style={{ padding: 10 }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{albums[2].title}</Text>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', color: "#000" }}>{albums[2].title}</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Text>Home</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Se connecter')}>
+            <Text style={styles.buttonText}>Se connecter</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text>Login</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profil')}>
+            <Text style={styles.buttonText}>Profil</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Profil')}>
-            <Text>Profil</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Recherche')}>
+            <Text style={styles.buttonText}>Recherche</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-            <Text>Search</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Réglement')}>
-            <Text>Rgpd</Text>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Réglement')}>
+            <Text style={styles.buttonText}>Réglement général</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -127,27 +124,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    color:'#000',
   },
   titleOption:{
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    right:153,
+    paddingRight:253,
+    color:'#000',
   },
   description: {
-    fontSize: 14,
+    fontSize: 15,
     marginBottom: 20,
-  },
-  titleSection:{
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#777',
-    right:'31%',
+    color:'#000',
+    textAlign:'justify',
   },
   image: {
     width: '100%',
-    height: 150,
-    resizeMode: 'cover',
+    height: 130,
   },
   subtitle: {
     fontSize: 18,
@@ -155,27 +149,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 20,
     paddingHorizontal: 30,
-    color: '#555',
+    color: '#000',
     lineHeight: 25,
-  },
-  titleInscrition:{
-    fontSize:20,
-    right:128,
-    color: '#900C3F',
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  button: {
-    backgroundColor: '#1E88E5',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginVertical: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
   },
   album: {
     width: '90%',
@@ -205,8 +180,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
   },
-  albumDescription: {
-    fontSize: 14,
-    color: '#707070',
+  button: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#000000',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 5,
+    marginLeft: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
