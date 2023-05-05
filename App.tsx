@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
 import LoginScreen from './navigation/screens/LoginScreen';
@@ -21,7 +21,7 @@ const Stack = createStackNavigator();
 const albums = [
   { id: 0, title: 'SLAM', image: require('./navigation/Image/slam.jpg'), description: 'Solutions Logicielles et Applications Métiers' },
   { id: 1, title: 'SISR', image: require('./navigation/Image/sisr.jpg'), description: 'Solutions d\'Infrastructure, Systèmes et Réseaux' },
-  { id: 2, title: 'Salon Etudiant | Porte Ouverte', image: require('./navigation/Image/salonk.jpg'), description: 'Future Etudiant de BTS SIO' }
+  { id: 2, title: 'Salon Etudiant | Porte Ouverte', image: require('./navigation/Image/salonk.jpg'), description: 'Future Etudiant de BTS SIO' },
 ];
 
 export default function App() {
@@ -48,7 +48,7 @@ function HomeScreen({ navigation }) {
     <ScrollView>
     <View style={styles.container}>
       <Image
-      source={require('./navigation/Image/AdmiSIO2.png')}
+      source={require('./navigation/Image/BTSSIO2.png')}
       style={styles.image}
       />
       <Text style={styles.subtitle}>Bienvenue dans l'application dédiée aux futurs étudiants du BTS SIO</Text>
@@ -90,18 +90,21 @@ function HomeScreen({ navigation }) {
               <Text style={{ fontSize: 16, fontWeight: 'bold', color: "#000" }}>{albums[2].title}</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Se connecter')}>
-            <Text style={styles.buttonText}>Se connecter</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profil')}>
-            <Text style={styles.buttonText}>Profil</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Recherche')}>
-            <Text style={styles.buttonText}>Recherche</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Réglement')}>
-            <Text style={styles.buttonText}>Réglement général</Text>
-          </TouchableOpacity>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Se connecter')}>
+              <Text style={styles.buttonText}>Se connecter</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Recherche')}>
+              <Text style={styles.buttonText}>Recherche</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profil')}>
+              <Text style={styles.buttonText}>Profil</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.footer}>
+            <Text style={styles.footerText} onPress={() => navigation.navigate('Réglement')}>Réglement générales</Text>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    paddingRight:253,
+    paddingRight:683,//Table : 683 // Telephone : 300
     color:'#000',
   },
   description: {
@@ -141,7 +144,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 130,
+    height: 160,
+    margin:15,
   },
   subtitle: {
     fontSize: 18,
@@ -193,5 +197,15 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  footer: {
+    margin:20,
+    padding: 10,
+  },
+  footerText: {
+    color: '#000',
+    fontSize: 15,
+    textAlign: 'center',
+    opacity: 0.6,
   },
 });

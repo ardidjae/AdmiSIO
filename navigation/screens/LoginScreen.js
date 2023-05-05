@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, alert } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, alert, Alert } from 'react-native';
 // import { firebase } from '@react-native-firebase/auth';
 import firebase from '../../config/firebase';
 
@@ -38,6 +38,18 @@ export default function LoginScreen({ navigation }) {
       .catch(error => alert(error.message));
   };
 
+  const handleResetPassword = () => {
+    firebase.auth().sendPasswordResetEmail(email);
+    console.log('Un email de réinitialisation a été envoyé à votre adresse email');
+    Alert.alert('Email envoyé', 'Un email de réinitialisation a été envoyé à votre adresse email');
+      // .then(() => {
+      //   alert('Un email de réinitialisation a été envoyé à votre adresse email.');
+      // })
+      // .catch((error) => {
+      //   alert('Cette adresse email n\'est pas associée à un compte Admisio ou une erreur s\'est produite');
+      // });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Connexion</Text>
@@ -69,6 +81,9 @@ export default function LoginScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleSignUp}>
           <Text style={styles.buttonText}>S'inscrire</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
+          <Text style={styles.buttonText}>Mot de passe oublié ?</Text>
         </TouchableOpacity>
       </View>
     </View>

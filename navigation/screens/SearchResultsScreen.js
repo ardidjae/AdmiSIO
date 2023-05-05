@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
 
 export default function SearchResults({ route }) {
@@ -13,6 +13,7 @@ export default function SearchResults({ route }) {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.title}>Résultats de recherche</Text>
       <Text style={styles.numResults}>{numResults} personne(s) inscrite(s)</Text>
@@ -21,7 +22,9 @@ export default function SearchResults({ route }) {
           <View style={styles.row}>
             <Text style={styles.cell}>Nom</Text>
             <Text style={styles.cell}>Prénom</Text>
-            <Text style={styles.cell}>Type</Text>
+            <Text style={styles.cell}>Ecole</Text>
+            <Text style={styles.cell}>Bac</Text>
+            <Text style={styles.cell}>Lieu</Text>
             <Text style={styles.cell}>Année</Text>
             <Text style={styles.cell}>Supprimer</Text>
           </View>
@@ -29,6 +32,8 @@ export default function SearchResults({ route }) {
             <View style={styles.row} key={index}>
               <Text style={styles.cell}>{item.nom}</Text>
               <Text style={styles.cell}>{item.prenom}</Text>
+              <Text style={styles.cell}>{item.etablissement}</Text>
+              <Text style={styles.cell}>{item.bac}</Text>
               <Text style={styles.cell}>{item.type}</Text>
               <Text style={styles.cell}>{item.annee}</Text>
               <TouchableOpacity
@@ -44,6 +49,7 @@ export default function SearchResults({ route }) {
         <Text style={styles.noResults}>Aucun résultat trouvé</Text>
       )}
     </View>
+    </ScrollView>
   );
 }
 

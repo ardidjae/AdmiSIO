@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView} from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { Picker } from '@react-native-picker/picker';
 // import firestore from '../../config/firebase';
-
-// Utilisez Firebase dans votre code ici
 
 
 export default function RegistrationScreen({ navigation }) {
@@ -32,6 +30,14 @@ export default function RegistrationScreen({ navigation }) {
           annee,
         });
       console.log('Utilisateur enregistré avec succès!', response);
+      Alert.alert('Inscription réussie', 'Votre inscription a été enregistrée avec succès.');
+      setNom('');
+      setPrenom('');
+      setEmail('');
+      setBac('');
+      setEtablissement('');
+      setChoixOption('');
+      setType('');
     } catch (error) {
       console.error('Erreur lors de l\'enregistrement de l\'utilisateur:', error);
     }
@@ -91,7 +97,7 @@ export default function RegistrationScreen({ navigation }) {
           <Picker.Item label="SISR" value="SISR" />
           <Picker.Item label="NSP" value="NSP" />
         </Picker>
-        <Text style={styles.description}>Où souhaitez-vous nous rencontrer ?</Text>
+        <Text style={styles.description}>Lieu de rencontre</Text>
         <Picker
           selectedValue={type}
           onValueChange={(itemValue) => setType(itemValue)}
