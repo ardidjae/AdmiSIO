@@ -4,12 +4,13 @@ import auth from '@react-native-firebase/auth';
 
 const firebaseConfig = {
   // votre configuration Firebase ici
-  apiKey: "AIzaSyDHfTrO0MDF2tSad0RbWc55tyHcnpRCx0s",
-  authDomain: "admisio-b235f.firebaseapp.com",
-  projectId: "admisio-b235f",
-  storageBucket: "admisio-b235f.appspot.com",
-  messagingSenderId: "283612686555",
-  appId: "1:283612686555:web:25ce49da057a23ee9884fe",
+  apiKey: "AIzaSyC0u0qH1gkeXVexbeWVESUoHeDkwygXRd0",
+  authDomain: "admisio-adb73.firebaseapp.com",
+  projectId: "admisio-adb73",
+  storageBucket: "admisio-adb73.appspot.com",
+  messagingSenderId: "548181428134",
+  appId: "1:548181428134:web:faadba81ae27c42bd5b167",
+  measurementId: "G-WYN0FJZVDR",
   databaseURL:"",
 };
 
