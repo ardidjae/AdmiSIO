@@ -16,6 +16,13 @@ export default function RegistrationScreen({ navigation }) {
   const [annee, setAnnee] = useState(new Date().getFullYear().toString()); // Champ année invisible
   const [isButtonDisabled, setIsButtonDisabled] = useState(true); // état pour activer/désactiver le bouton S'inscrire
 
+  // États pour suivre la validité de chaque champ
+  const [nomValid, setNomValid] = useState(true);
+  const [prenomValid, setPrenomValid] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+  const [bacValid, setBacValid] = useState(true);
+  const [etablissementValid, setEtablissementValid] = useState(true);
+
   // Fonction pour vérifier si tous les champs obligatoires sont remplis
   const checkInputs = () => {
     if (nom.trim() !== '' && prenom.trim() !== '' && email.trim() !== '' && bac.trim() !== '' && etablissement.trim() !== '') {
@@ -30,18 +37,23 @@ export default function RegistrationScreen({ navigation }) {
     switch (field) {
       case 'nom':
         setNom(value);
+        setNomValid(value.trim().length >= 2);
         break;
       case 'prenom':
         setPrenom(value);
+        setPrenomValid(value.trim().length >= 2);
         break;
       case 'email':
         setEmail(value);
+        setEmailValid(value.trim().includes('@'));
         break;
       case 'bac':
         setBac(value);
+        setBacValid(value.trim().length >= 2);
         break;
       case 'etablissement':
         setEtablissement(value);
+        setEtablissementValid(value.trim().length >= 2);
         break;
       default:
         break;
@@ -83,21 +95,23 @@ export default function RegistrationScreen({ navigation }) {
       <Text style={styles.title}>Formulaire d'inscription</Text>
       <View style={styles.form}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, !nomValid && styles.inputError]}
           value={nom}
           onChangeText={(text) => handleInputChange('nom', text)}
           placeholder="Nom"
           placeholderTextColor="#000"
         />
+        {!nomValid && <Text style={styles.errorMessage}>Le nom doit contenir au moins 2 caractères.</Text>}
         <TextInput
-          style={styles.input}
+          style={[styles.input, !prenomValid && styles.inputError]}
           value={prenom}
           onChangeText={(text) => handleInputChange('prenom', text)}
           placeholder="Prénom"
           placeholderTextColor="#000"
         />
+        {!prenomValid && <Text style={styles.errorMessage}>Le prénom doit contenir au moins 2 caractères.</Text>}
         <TextInput
-          style={styles.input}
+          style={[styles.input, !emailValid && styles.inputError]}
           value={email}
           onChangeText={(text) => handleInputChange('email', text)}
           placeholder="Email"
@@ -107,20 +121,23 @@ export default function RegistrationScreen({ navigation }) {
           textContentType="emailAddress"
           placeholderTextColor="#000"
         />
+        {!emailValid && <Text style={styles.errorMessage}>L'email doit être valide (contenir '@').</Text>}
         <TextInput
-          style={styles.input}
+          style={[styles.input, !bacValid && styles.inputError]}
           value={bac}
           onChangeText={(text) => handleInputChange('bac', text)}
           placeholder="Bac"
           placeholderTextColor="#000"
         />
+        {!bacValid && <Text style={styles.errorMessage}>Le bac doit contenir au moins 2 caractères.</Text>}
         <TextInput
-          style={styles.input}
+          style={[styles.input, !etablissementValid && styles.inputError]}
           value={etablissement}
           onChangeText={(text) => handleInputChange('etablissement', text)}
           placeholder="Établissement"
           placeholderTextColor="#000"
         />
+        {!etablissementValid && <Text style={styles.errorMessage}>L'établissement doit contenir au moins 2 caractères.</Text>}
         <Text style={styles.description}>Quelle option préférez-vous ?</Text>
         <Picker
           selectedValue={choixOption}
@@ -183,6 +200,14 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     marginBottom: 16,
+  },
+  inputError: {
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 2,
   },
   button: {
     backgroundColor: '#007AFF',
