@@ -14,6 +14,40 @@ export default function RegistrationScreen({ navigation }) {
   const [choixOption, setChoixOption] = useState('');
   const [type, setType] = useState('Salon Etudiant');
   const [annee, setAnnee] = useState(new Date().getFullYear().toString()); // Champ année invisible
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true); // état pour activer/désactiver le bouton S'inscrire
+
+  // Fonction pour vérifier si tous les champs obligatoires sont remplis
+  const checkInputs = () => {
+    if (nom.trim() !== '' && prenom.trim() !== '' && email.trim() !== '' && bac.trim() !== '' && etablissement.trim() !== '') {
+      setIsButtonDisabled(false); // activer le bouton si tous les champs obligatoires sont remplis
+    } else {
+      setIsButtonDisabled(true); // désactiver le bouton si au moins un champ est vide
+    }
+  };
+
+  // Mettre à jour l'état isButtonDisabled à chaque changement dans les champs de saisie
+  const handleInputChange = (field, value) => {
+    switch (field) {
+      case 'nom':
+        setNom(value);
+        break;
+      case 'prenom':
+        setPrenom(value);
+        break;
+      case 'email':
+        setEmail(value);
+        break;
+      case 'bac':
+        setBac(value);
+        break;
+      case 'etablissement':
+        setEtablissement(value);
+        break;
+      default:
+        break;
+    }
+    checkInputs(); // Vérifier à chaque changement de texte
+  };
 
   const handleRegistration = async () => {
     try {
@@ -51,22 +85,22 @@ export default function RegistrationScreen({ navigation }) {
         <TextInput
           style={styles.input}
           value={nom}
-          onChangeText={setNom}
+          onChangeText={(text) => handleInputChange('nom', text)}
           placeholder="Nom"
           placeholderTextColor="#000"
         />
         <TextInput
           style={styles.input}
           value={prenom}
-          onChangeText={setPrenom}
+          onChangeText={(text) => handleInputChange('prenom', text)}
           placeholder="Prénom"
           placeholderTextColor="#000"
         />
         <TextInput
           style={styles.input}
           value={email}
-          onChangeText={setEmail}
-          placeholder="E-mail"
+          onChangeText={(text) => handleInputChange('email', text)}
+          placeholder="Email"
           keyboardType="email-address"
           autoCapitalize="none"
           autoCompleteType="email"
@@ -76,14 +110,14 @@ export default function RegistrationScreen({ navigation }) {
         <TextInput
           style={styles.input}
           value={bac}
-          onChangeText={setBac}
+          onChangeText={(text) => handleInputChange('bac', text)}
           placeholder="Bac"
           placeholderTextColor="#000"
         />
         <TextInput
           style={styles.input}
           value={etablissement}
-          onChangeText={setEtablissement}
+          onChangeText={(text) => handleInputChange('etablissement', text)}
           placeholder="Établissement"
           placeholderTextColor="#000"
         />
@@ -107,7 +141,11 @@ export default function RegistrationScreen({ navigation }) {
           <Picker.Item label="Porte Ouverte" value="Porte Ouverte" />
         </Picker>
 
-        <TouchableOpacity style={styles.button} onPress={handleRegistration}>
+        <TouchableOpacity
+          style={[styles.button, isButtonDisabled && styles.disabledButton]}
+          onPress={handleRegistration}
+          disabled={isButtonDisabled}
+        >
           <Text style={styles.buttonText}>S'inscrire</Text>
         </TouchableOpacity>
       </View>
@@ -159,5 +197,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  disabledButton: {
+    backgroundColor: 'rgba(169, 169, 169, 0.5)', // couleur pour le bouton désactivé
   },
 });
