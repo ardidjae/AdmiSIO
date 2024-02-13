@@ -11,12 +11,22 @@ export default function SearchScreen() {
   const navigation = useNavigation();
 
   const handleSearch = () => {
-    // Recherche d'étudiants dans la base de données Firebase
-    firebase.firestore()
-      .collection('Inscription')
-      .where('type', '==', type) // Ajout de la condition pour le type de l'événement
-      .where('annee', '==', annee) // Ajout de la condition pour l'année de l'inscription
-      .get()
+    let query = firebase.firestore().collection('Inscription');
+
+    // Vérifier si l'utilisateur a sélectionné "Tous"
+    if (type === 'Tous') {
+      // Si c'est le cas, rechercher les étudiants pour les deux types d'événements
+      query = query.where('type', 'in', ['Salon Etudiant', 'Porte Ouverte']);
+    } else {
+      // Sinon, rechercher les étudiants pour le type d'événement sélectionné
+      query = query.where('type', '==', type);
+    }
+
+    // Ajouter la condition pour l'année de l'inscription
+    query = query.where('annee', '==', annee);
+
+    // Exécuter la requête
+    query.get()
       .then(querySnapshot => {
         // Traitement des résultats de recherche
         const results = [];
@@ -24,8 +34,7 @@ export default function SearchScreen() {
           results.push(doc.data());
         });
         console.log('Search results:', results);
-        const filteredResults = results.filter(result => result.type === type && result.annee === annee); // Filtrer les résultats en fonction du type d'événement sélectionné
-        navigation.navigate('SearchResults', { results : filteredResults});
+        navigation.navigate('SearchResults', { results: results });
       })
       .catch(error => console.error(error));
   };
@@ -41,6 +50,7 @@ export default function SearchScreen() {
         >
           <Picker.Item label="Salon Etudiant" value="Salon Etudiant" />
           <Picker.Item label="Porte Ouverte" value="Porte Ouverte" />
+          <Picker.Item label="Tous" value="Tous" />
         </Picker>
         <Picker
           style={styles.input}
