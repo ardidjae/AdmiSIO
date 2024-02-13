@@ -49,6 +49,7 @@ export default function SearchScreen() {
         >
           <Picker.Item label="2022" value="2022" />
           <Picker.Item label="2023" value="2023" />
+          <Picker.Item label="2024" value="2024" />
         </Picker>
         <TouchableOpacity style={styles.button} onPress={handleSearch}>
           <Text style={styles.buttonText}>Rechercher</Text>
