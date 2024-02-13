@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,6 +16,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import SLAMPage from './navigation/screens/SlamScreen';
 import SISRPage from './navigation/screens/SisrScreen';
 // import MainContainer from './navigation/screens/MainContainer';
+import { auth } from './config/firebase';
 
 const Stack = createStackNavigator();
 const albums = [
@@ -25,10 +26,26 @@ const albums = [
 ];
 
 export default function App() {
+  const [userLoggedIn, setUserLoggedIn] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth().onAuthStateChanged(user => {
+      if (user) {
+        setUserLoggedIn(true); // Mettre à jour l'état userLoggedIn si l'utilisateur est connecté
+      } else {
+        setUserLoggedIn(false); // Mettre à jour l'état userLoggedIn si l'utilisateur n'est pas connecté
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home">
+          {props => <HomeScreen {...props} userLoggedIn={userLoggedIn} />}
+        </Stack.Screen>
         <Stack.Screen name="Se connecter" component={LoginScreen} />
         <Stack.Screen name="S'inscrire" component={RegistrationScreen} />
         <Stack.Screen name="Réglement" component={LegalNoticeScreen} />
@@ -43,7 +60,7 @@ export default function App() {
   );
 }
 
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation, userLoggedIn }) {
   return (
     <ScrollView>
     <View style={styles.container}>
@@ -90,18 +107,20 @@ function HomeScreen({ navigation }) {
               <Text style={{ fontSize: 16, fontWeight: 'bold', color: "#000" }}>{albums[2].title}</Text>
             </View>
           </TouchableOpacity>
-          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          {userLoggedIn ? (
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Recherche')}>
+                <Text style={styles.buttonText}>Recherche</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profil')}>
+                <Text style={styles.buttonText}>Profil</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Se connecter')}>
               <Text style={styles.buttonText}>Se connecter</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Recherche')}>
-              <Text style={styles.buttonText}>Recherche</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profil')}>
-              <Text style={styles.buttonText}>Profil</Text>
-            </TouchableOpacity>
-          </View>
+          )}
           <View style={styles.footer}>
             <Text style={styles.footerText} onPress={() => navigation.navigate('Réglement')}>Réglement générales</Text>
           </View>
